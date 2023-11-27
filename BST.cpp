@@ -1,12 +1,14 @@
 #include <iostream>
 using namespace std;
+#include <fstream>
+#include <string>
 #include "BST.h"
 
 //Con-/De-structors
-BST()
+BST::BST()
 { root = NULL; }
 
-~BST()
+BST::~BST()
 {
     while (root != NULL)
     {
@@ -15,7 +17,7 @@ BST()
 }
 
 //Setup
-void add(string newkey, int newdata)
+void BST::add(string newkey, int newdata)
 {
     Node* NEWMANN = new Node;
     NEWMANN -> left = NULL;
@@ -48,7 +50,7 @@ void add(string newkey, int newdata)
     return;
 }
 
-void addhelper(Node* item, Node* NEWMANN);
+void BST::addhelper(Node* item, Node* NEWMANN)
 {
     //If the Datas match
     if (item -> data == NEWMANN -> data)
@@ -130,9 +132,9 @@ void addhelper(Node* item, Node* NEWMANN);
     return;
 }
 
-void remove(string target)
+void BST::remove(string target)
 {
-    Node* cursor = head;
+    Node* cursor = root;
     Node* item = find(cursor, target);
     if (item == NULL)
     {
@@ -143,7 +145,7 @@ void remove(string target)
     return;
 }
 
-void destroy(Node* item)
+void BST::destroy(Node* item)
 {
     Node* cursor;
     
@@ -164,7 +166,7 @@ void destroy(Node* item)
     return;
 }
 
-Node* replacementsearch(Node* item)
+Node* BST::replacementsearch(Node* item)
 {
     //Case 1: Both are NULL
     if (item -> left == NULL && item -> right == NULL)
@@ -178,7 +180,7 @@ Node* replacementsearch(Node* item)
 }
 
 //Search
-Node* find(Node* start, string param)
+Node* BST::find(Node* start, string param)
 {
     if (start -> key == param)
         return start;
@@ -207,12 +209,12 @@ Node* find(Node* start, string param)
     return NULL;
 }
 
-Node* minmax()
+Node* BST::minmax()
 {
     return root;
 }
 
-Node* min(Node* start)
+Node* BST::min(Node* start)
 {
     if (start -> left == NULL)
         return start;
@@ -220,7 +222,7 @@ Node* min(Node* start)
     return min(start -> left);
 }
 
-Node* max(Node* start);
+Node* BST::max(Node* start)
 {
     if (start -> right == NULL)
         return start;
@@ -230,38 +232,38 @@ Node* max(Node* start);
 
 
 //Stream
-void printinitializer()
+void BST::printinitializer()
 {
     Node* cursor = root;
-    print(cursor, 1)
+    print(cursor, 1);
     return;
 }
 
-void print(Node* start, int inlayer)
+void BST::print(Node* start, int inlayer)
 {
     if (start == NULL)
         return;
     cout << inlayer << ": " << start -> data << " " << start -> key << endl;
 
     if (start -> left != NULL)
-        print (start -> left, inlayer + 1)
+        print (start -> left, inlayer + 1);
 
     if (start -> right != NULL)
-        print (start -> right, inlayer + 1)
+        print (start -> right, inlayer + 1);
 
     return;
 }
 
-void siprint(Node* item)
+void BST::siprint(Node* item)
 {
     cout << item -> data << " " << item -> key << endl;
     return;
 }
 
-void read(string flnm)
+void BST::read(string flnm)
 {
-    int newkey;
-    string newdata;
+    string newkey;
+    int newdata;
     ifstream file;
     file.open(flnm);
     
@@ -276,11 +278,11 @@ void read(string flnm)
     return;
 }
 
-void write(string flnm);
+void BST::write(string flnm)
 {
     ofstream file;
     file.open(flnm);
-    Node* cursor = head;
+    Node* cursor = root;
 
     writehelper(cursor, file);
 
@@ -288,7 +290,7 @@ void write(string flnm);
     return;
 }
 
-void writehelper(Node* item, ofstream file);
+void BST::writehelper(Node* item, ofstream& file)
 {
     if (item == NULL)
         return;

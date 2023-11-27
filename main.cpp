@@ -1,6 +1,11 @@
 #include <iostream>
 using namespace std;
+#include <string>
+#include <cctype>
 #include "BST.h"
+
+void easyop();
+void easyloop();
 
 int main()
 {
@@ -26,6 +31,7 @@ void easyop()
 
 void easyloop()
 {
+    BST a;
     easyop();
     char op;
     int i = 0;
@@ -42,17 +48,17 @@ void easyloop()
             case 'x': //Exit
             {
                 cout << "Are you sure? Any unsaved progress will be lost. (Y/N)" << endl;
-                cin >> easyop;
-                tolower (easyop);
+                cin >> op;
+                tolower (op);
 
-                if (easyop == x || easyop == y)
+                if (op == 'x' || op == 'y')
                     return;
                 else
                     break;
             }
             case '?': //easyop
             {
-                easyop;
+                easyop();
                 break;
             }
             case 'r': //Read from File
@@ -60,7 +66,7 @@ void easyloop()
                 string flnm;
                 cout << "Please enter the name of the file you wish to read:" << endl;
                 cin >> flnm;
-                read(flnm);
+                a.read(flnm);
                 cout << "Done." << endl;
                 break;
             }
@@ -69,7 +75,7 @@ void easyloop()
                 string flnm;
                 cout << "Please enter the name of the while you wish to write to:" << endl;
                 cin >> flnm;
-                write(flnm);
+                a.write(flnm);
                 cout << "Done." << endl;
                 break;
             }
@@ -83,7 +89,7 @@ void easyloop()
                 cout << endl << "The number that represents it (Int):" << endl;
                 cin >> newdata;
                 cout << endl;
-                add(newkey, newdata);
+                a.add(newkey, newdata);
 
                 cout << "Done." << endl;
             }
@@ -92,23 +98,23 @@ void easyloop()
                 string choppingblock;
                 cout << "Please enter the item you wish to delete (String):" << endl;
                 cin >> choppingblock;
-                remove(choppingblock);
+                a.remove(choppingblock);
                 cout << endl << "Done." << endl;
                 break;
             }
             case 'p': //Print
             {
-                printinitializer();
+                a.printinitializer();
                 break;
             }
             case 'm': //Min Function
             {
-                siprint(min(minmax()));
+                a.siprint(a.min(a.minmax()));
                 break;
             }
             case 'M': //Max Function
             {
-                siprint(max(minmax()));
+                a.siprint(a.max(a.minmax()));
                 break;
             }
             default: //Wat?

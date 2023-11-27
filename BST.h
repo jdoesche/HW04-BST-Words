@@ -4,6 +4,7 @@
 #include <iostream>
 using namespace std;
 #include <fstream>
+#include <string>
 
 struct Node
 {
@@ -11,19 +12,21 @@ struct Node
     Node* right;
     int data;
     string key;
-}
+};
 
 class BST
 {
  private:
     Node* root;
+    void print(Node* start, int inlayer);
 
     //Helper Functions
     void addhelper(Node* item, Node* NEWMANN);
     void destroy(Node* item);
-    void writehelper(Node* item, ofstream file);
+    void writehelper(Node* item, ofstream& file);
+    Node* replacementsearch(Node* item);
+    
 
-    void print(Node* start, int inlayer);
  
  public:
     //Con-/De-structors
@@ -32,17 +35,20 @@ class BST
 
     //Setup
     void add(string newkey, int newdata);
-    void remove(string target)
+    void remove(string target);
 
     //Find
     Node* find(Node* start, string param);
-    Node* minmax();
     Node* min(Node* start);
     Node* max(Node* start);
 
     //Stream
-    void printinitializer();
     void read(string flnm);
     void write(string flnm);
-} 
+
+    //Initializers (Public Helpers)
+    void printinitializer();
+    Node* minmax();
+    void siprint(Node* item);
+};
 #endif //BST_H

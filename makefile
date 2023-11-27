@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -g -Wall -Wextra
 
-default: bst
+default: BST
 
 BST: BST.o main.o
 	$(CC) $(CFLAGS) -o bst BST.o main.o
