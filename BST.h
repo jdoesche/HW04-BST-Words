@@ -48,7 +48,6 @@ class BST
 
     //Initializers (Public Helpers)
     void printinitializer();
-    Node* minmax();
     void siprint(Node* item);
 };
 #endif //BST_H

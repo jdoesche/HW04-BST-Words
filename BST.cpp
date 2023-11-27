@@ -182,6 +182,9 @@ Node* BST::replacementsearch(Node* item)
 //Search
 Node* BST::find(Node* start, string param)
 {
+    if (start == NULL)
+        start = root;
+
     if (start -> key == param)
         return start;
     
@@ -209,13 +212,11 @@ Node* BST::find(Node* start, string param)
     return NULL;
 }
 
-Node* BST::minmax()
-{
-    return root;
-}
-
 Node* BST::min(Node* start)
 {
+    if (start == NULL) //Assume root
+        start = root;
+
     if (start -> left == NULL)
         return start;
 
@@ -224,6 +225,9 @@ Node* BST::min(Node* start)
 
 Node* BST::max(Node* start)
 {
+    if (start == NULL) //Assume root
+        start = root;
+
     if (start -> right == NULL)
         return start;
 
@@ -243,6 +247,7 @@ void BST::print(Node* start, int inlayer)
 {
     if (start == NULL)
         return;
+
     cout << inlayer << ": " << start -> data << " " << start -> key << endl;
 
     if (start -> left != NULL)

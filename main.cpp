@@ -24,6 +24,7 @@ void easyop()
          << "  (D)elete an Existing Entry to the BST" << endl
          << "  (m)in Function" << endl
          << "  (M)ax Function" << endl
+         << "  (S)earch for a Specific Entry" << endl
          << "  (P)rint the Current BST" << endl
          << "  (?) Bring up this menu again" << endl
          << "  (X) Exit the Program" << endl;
@@ -35,13 +36,14 @@ void easyloop()
     easyop();
     char op;
     int i = 0;
+    int split = 'a' - 'A';
 
     while(true)
     {
         cout << "What would you like to do?" << endl;
         cin >> op;
-        if (op != 'M')
-            tolower(op);
+        if (op != 'M' && op >= 'A' && op <= 'Z')
+            op = op + split;            
 
         switch(op)
         {
@@ -49,7 +51,8 @@ void easyloop()
             {
                 cout << "Are you sure? Any unsaved progress will be lost. (Y/N)" << endl;
                 cin >> op;
-                tolower (op);
+                if (op >= 'A' && op <= 'Z')
+                    op = op + split;
 
                 if (op == 'x' || op == 'y')
                     return;
@@ -92,6 +95,7 @@ void easyloop()
                 a.add(newkey, newdata);
 
                 cout << "Done." << endl;
+                break;
             }
             case 'd': //Delete an existing entry
             {
@@ -102,6 +106,15 @@ void easyloop()
                 cout << endl << "Done." << endl;
                 break;
             }
+            case 's': //Search
+            {
+                string findme;
+                cout << "Please enter the item you wish to find (String):" << endl;
+                cin >> findme;
+                a.siprint(a.find(NULL, findme));
+                cout << endl << "Done." << endl;
+                break;
+            }
             case 'p': //Print
             {
                 a.printinitializer();
@@ -109,12 +122,12 @@ void easyloop()
             }
             case 'm': //Min Function
             {
-                a.siprint(a.min(a.minmax()));
+                a.siprint(a.min(NULL));
                 break;
             }
             case 'M': //Max Function
             {
-                a.siprint(a.max(a.minmax()));
+                a.siprint(a.max(NULL));
                 break;
             }
             default: //Wat?
