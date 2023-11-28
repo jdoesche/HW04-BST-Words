@@ -3,7 +3,9 @@ Basically.
 This contains issues that need to be sorted out.
 
 1.) Segmentation Fault when Printing after overwriting an already existing number
+    RESOLVED
 2.) Segmentation Fault when Printing after reading in files
+    RESOLVED
 3.) Segmentation Fault when Printing after deleting an entry
 
 All of these issues are related to printing... so what's going on?

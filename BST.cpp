@@ -35,12 +35,8 @@ void BST::add(string newkey, int newdata)
     //Case B: Newuser = HEAD
     if (NEWMANN -> data == root -> data)
     {
-        Node* hold = root;
-        root = NEWMANN;
-        NEWMANN -> left = hold -> left;
-        NEWMANN -> right = hold -> right;
-        delete hold;
-
+        root -> key = NEWMANN -> key;
+        delete NEWMANN;
         return;
     }
 
@@ -55,11 +51,8 @@ void BST::addhelper(Node* item, Node* NEWMANN)
     //If the Datas match
     if (item -> data == NEWMANN -> data)
     {
-        Node* hold = item;
-        item = NEWMANN;
-        NEWMANN -> left = hold -> left;
-        NEWMANN -> right = hold -> right;
-        delete hold;
+        item -> key = NEWMANN -> key;
+        delete NEWMANN;
         return;
     }
 
@@ -132,6 +125,8 @@ void BST::addhelper(Node* item, Node* NEWMANN)
     return;
 }
 
+/* Note: I am re-coding this entire section from scratch
+
 void BST::remove(string target)
 {
     Node* cursor = root;
@@ -147,21 +142,27 @@ void BST::remove(string target)
 
 void BST::destroy(Node* item)
 {
-    Node* cursor;
+    Node* cursor = root;
     
     cursor = replacementsearch(item);
+
     if (item == root)
     {
-        if (cursor == item)
-            root = NULL;
+        root = NULL;
+        delete item;
+        return;
     }
-    if (cursor != item)
+    if (cursor == item)
     {
-        item -> data = cursor -> data;
-        item -> key = cursor -> key;
+        item = NULL;
+        delete cursor;
+        return;
     }
+    item -> data = cursor -> data;
+    item -> key = cursor -> key;
 
-    delete(cursor);
+
+    delete cursor;
 
     return;
 }
@@ -177,7 +178,7 @@ Node* BST::replacementsearch(Node* item)
         return max(item -> left);
 
     return min(item -> right);
-}
+}*/
 
 //Search
 Node* BST::find(Node* start, string param)
@@ -271,12 +272,14 @@ void BST::read(string flnm)
     int newdata;
     ifstream file;
     file.open(flnm);
-    
+
+    file >> newkey;
+    file >> newdata;
     while(file)
     {
+        add(newkey, newdata);
         file >> newkey;
         file >> newdata;
-        add(newkey, newdata);
     }
 
     file.close();
