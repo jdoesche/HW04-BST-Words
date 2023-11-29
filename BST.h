@@ -24,9 +24,7 @@ class BST
     void addhelper(Node* item, Node* NEWMANN);
     void destroy(Node* item);
     void writehelper(Node* item, ofstream& file);
-    Node* replacementsearch(Node* item);
-    
-
+    Node* finddagoshdangnode(Node* start, Node* marked);
  
  public:
     //Con-/De-structors
