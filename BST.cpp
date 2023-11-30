@@ -140,6 +140,138 @@ void BST::remove(string target)
 
 void BST::destroy(Node* marked)
 {
+  //2.) ID the Target
+  //  a.) Target = Leaf
+  //    i.) Change prior pointer to NULL
+  //  b.) Target = Branch
+  //    i.) Find a replacement leaf/Node
+  //   ii.) Change prior pointer to replacement
+  //  iii.) Delete or Re-direct leaf
+  //  c.) Target = Root
+  //    i.) Find a replacement leaf/Node
+  //   ii.) Change Root to Replacement
+  //  iii.) Delete or Re-direct leaf
+
+  bool isroot = false; //If the Marked is Root, set true
+  bool isleaf = true; //If the Marked is a Leaf, set true
+
+  if (marked == root)
+    isroot = true;
+  else
+    isroot = false;
+
+  if (marked -> left == NULL && marked -> right == NULL)
+    isleaf = true;
+  else
+    isleaf = false;
+
+
+  //Special case exception: IsLeaf && IsRoot
+  if (isleaf == true && isroot == true) //Last item in the list (Destroying the List)
+    {
+      root = NULL;
+      delete marked;
+      return;
+    }
+
+  //set paramaeters
+  //  If it is a branch, we need to find a replacement variable
+  //     If not, we can safely ignore it
+  //  If it is !root, we need to find its parent node
+  //     If not, we can set Parent to root;
+
+  //Setup
+  Node* parent; //Parent of the thing being deleted - Marked (Leaf) or Replacment (Branch)
+  Node* replacement; //Replacement variable
+  bool isleft; //True if Marked is the left child of Parent, False is Marked is the right child of Parent
+
+  if (isleaf == false)
+    {
+      replacement = findreplacement(marked);
+
+      parent = findparent(marked, replacement, isleft);
+    }
+  else
+    {
+      parent = findparent(root, marked, isleft);
+    }
+
+  //Setup done.
+  //We've got 2 situations to consider:
+  //a.) Head or Branch
+  //  i.) Reolace values with Replacement
+  //  ii.) Reroute Parent
+  //  iii.) Delete Replacement
+  //b.) Leaf
+  //  i.) Reroute Parent
+  //  ii.) Delete marked
+
+  if (isleaf == false)
+    {
+      marked -> key = replacement -> key;
+      marked -> data = replacement -> data;
+
+      if (isleft == true)
+	parent -> left = NULL;
+      else
+	parent -> right = NULL;
+
+      delete replacement;
+      return;
+    }
+
+  if (isleft == true)
+    parent -> left = NULL;
+  else
+    parent -> right = NULL;
+
+  delete marked;
+  return;
+}
+
+Node* BST::findparent(Node* start, Node* marked, bool& isleft)
+{
+  //exit
+  if (start -> left == NULL && start -> right == NULL)
+    return NULL;
+
+  if (start -> left == marked)
+    {
+      isleft = true;
+      return start;
+    }
+  if (start -> right == marked)
+    {
+      isleft = false;
+      return start;
+    }
+  Node* item;
+
+  item = findparent(start -> left, marked, isleft);
+  if (item != NULL)
+    return item;
+
+  item = findparent(start -> right, marked, isleft);
+  if (item != NULL)
+    return item;
+
+  return NULL;
+}
+
+Node* BST::findreplacement(Node* marked)
+{
+  if (marked -> left != NULL)
+    return max(marked -> left);
+
+  if (marked -> right != NULL)
+    return min(marked -> right);
+
+  return marked;
+}
+
+/*
+void BST::destroy(Node* marked)
+{
   //2.) Identify the Target
   //  a.) Target = Head
   //    i.) Find a Replacement
@@ -264,7 +396,7 @@ Node* BST::finddagoshdangnode(Node* start, Node* marked)
   
   return NULL;
 }
-
+*/
 /* Note: I am re-coding this entire section from scratch
 
 void BST::remove(string target)
@@ -387,7 +519,12 @@ void BST::print(Node* start, int inlayer)
 {
     if (start == NULL)
         return;
-
+    int i = 0;
+    while (i < inlayer)
+    {
+      cout << " ";
+      i++;
+    }
     cout << inlayer << ": " << start -> data << " " << start -> key << endl;
 
     if (start -> left != NULL)

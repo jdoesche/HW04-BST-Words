@@ -22,10 +22,13 @@ class BST
 
     //Helper Functions
     void addhelper(Node* item, Node* NEWMANN);
-    void destroy(Node* item);
+    void destroy(Node* marked);
     void writehelper(Node* item, ofstream& file);
-    Node* finddagoshdangnode(Node* start, Node* marked);
- 
+  //Node* finddagoshdangnode(Node* start, Node* marked);
+    Node* findparent(Node* start, Node* marked, bool& isleft);
+    Node* findreplacement(Node* marked);
+
+  
  public:
     //Con-/De-structors
     BST();
